@@ -8,31 +8,31 @@ export default function SignUp() {
   const [errorMessages, setErrorMessages] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleChange = (e) => {  
-    setFormData({...formData, [e.target.id]: e.target.value.trim()});
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      return setErrorMessages('All fields are required');
+      return setErrorMessages("All fields are required");
     }
     try {
       setLoading(true);
       setErrorMessages(null);
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
       if (data.success === false) {
         return setErrorMessages(data.message);
       }
       setLoading(false);
-      if(res.ok) {
-        navigate('/signin');
+      if (res.ok) {
+        navigate("/signin");
       }
     } catch (error) {
       setErrorMessages(error.message);
@@ -45,11 +45,15 @@ export default function SignUp() {
         {/* left */}
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
-            <span className="px-2 py-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">Ashish</span>
-            Shrivastav
+            <span className="px-2 py-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+              DevSecOps
+            </span>
+            Council
           </Link>
           <p className="text-sm mt-5">
-            This is the demo project. You can sign up to see the magic. You can use the email and password or use the google sign up button to sign up.
+            This is the demo project. You can sign up to see the magic. You can
+            use the email and password or use the google sign up button to sign
+            up.
           </p>
         </div>
         {/* right */}
@@ -57,40 +61,58 @@ export default function SignUp() {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
               <Label value="Your username" />
-              <TextInput type="text" placeholder="Username" id="username" onChange={handleChange}/>
+              <TextInput
+                type="text"
+                placeholder="Username"
+                id="username"
+                onChange={handleChange}
+              />
             </div>
             <div>
               <Label value="Your email" />
-              <TextInput type="email" placeholder="Email" id="email" onChange={handleChange}/>
+              <TextInput
+                type="email"
+                placeholder="Email"
+                id="email"
+                onChange={handleChange}
+              />
             </div>
             <div>
               <Label value="Your password" />
-              <TextInput type="password" placeholder="Password" id="password" onChange={handleChange}/>
+              <TextInput
+                type="password"
+                placeholder="Password"
+                id="password"
+                onChange={handleChange}
+              />
             </div>
-            <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
-              {
-                loading ? (
-                  <>
+            <Button
+              gradientDuoTone="purpleToPink"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
                   <Spinner size="sm" />
                   <span className="pl-3">Loading...</span>
-                  </>
-                ) : 'Sign Up'
-              }
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
-              <OAuth />
+            <OAuth />
           </form>
-          <div className='flex gap-2 text-sm mt-5'>
+          <div className="flex gap-2 text-sm mt-5">
             <span>Have an account? </span>
             <Link to="/signin" className="text-purple-500 underline">
               Sign In
             </Link>
           </div>
-          {
-            errorMessages &&
-            <Alert className="mt-5" color='failure'>
+          {errorMessages && (
+            <Alert className="mt-5" color="failure">
               {errorMessages}
-            </Alert>  
-          }
+            </Alert>
+          )}
         </div>
       </div>
     </div>
