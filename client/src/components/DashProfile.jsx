@@ -24,8 +24,7 @@ export default function DashProfile() {
     }
     try {
       dispatch(updateStart());
-      const userId = "65f3d9791587d206b648e64c";
-      const res = await fetch(`/api/user/update/${userId}`, {
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
