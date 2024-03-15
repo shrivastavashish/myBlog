@@ -1,2 +1,2 @@
-# myBlog
-my personal blog using react tailwind css
+# DevSecOps Portal
+DevSecOps portal using react tailwind CSS and javascript!
