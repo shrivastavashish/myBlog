@@ -11,15 +11,23 @@ import { useDispatch } from "react-redux";
 export default function DashProfile() {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
+  const [updateUserError, setUpdateUserError] = useState(null);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
     if (Object.keys(formData).length === 0) {
+      setUpdateUserError("No changes made");
       return;
     }
     try {
@@ -31,15 +39,17 @@ export default function DashProfile() {
         },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
       if (!res.ok) {
         dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
       } else {
         dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
     }
   };
 
@@ -81,6 +91,11 @@ export default function DashProfile() {
           Sign Out
         </Button>
       </form>
+      {updateUserSuccess && (
+        <div className="mt-5">
+          <alert color="success">{updateUserSuccess}</alert>
+        </div>
+      )}
     </div>
   );
 }
