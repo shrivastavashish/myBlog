@@ -5,6 +5,7 @@ import {
   updateStart,
   updateSuccess,
   updateFailure,
+  signoutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -52,7 +53,21 @@ export default function DashProfile() {
       setUpdateUserError(error.message);
     }
   };
-
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -87,7 +102,12 @@ export default function DashProfile() {
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update Profile
         </Button>
-        <Button type="submit" gradientDuoTone="purpleToPink" outline>
+        <Button
+          onClick={handleSignout}
+          type="submit"
+          gradientDuoTone="purpleToPink"
+          outline
+        >
           Sign Out
         </Button>
       </form>
