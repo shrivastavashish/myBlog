@@ -18,7 +18,7 @@ export default function header() {
           to="/"
           className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
         >
-          <span className="px-2 py-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+          <span className="px-2 py-1 bg-gradient-to-br from-yellow-400 via-red-500 to-purple-600 rounded-lg text-white shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
             DevSecOps
           </span>
           Council
